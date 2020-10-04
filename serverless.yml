@@ -68,6 +68,14 @@ functions:
           path: users
           method: get
           cors: true
+          
+  posts:
+    handler: src/handler.posts
+    events:
+      - http:
+          path: posts
+          method: get
+          cors: true
 
 custom:
   output:
