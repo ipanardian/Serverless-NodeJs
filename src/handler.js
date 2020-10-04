@@ -5,13 +5,13 @@ const API_URL = 'https://jsonplaceholder.typicode.com'
 
 module.exports.users = async event => {
 
-	const users = await getUsers()
+	const users = await getUsers();
 
 	return {
 		statusCode: 200,
 		body: JSON.stringify({
 			message: 'Users retrieved successfully!',
-			users: users
+			data: users
 		},
 		null,
 		2
@@ -21,13 +21,29 @@ module.exports.users = async event => {
 
 module.exports.posts = async event => {
 
-	const posts = await getPosts()
+	const posts = await getPosts();
 
 	return {
 		statusCode: 200,
 		body: JSON.stringify({
 			message: 'Posts retrieved successfully!',
-			posts: posts
+			data: posts
+		},
+		null,
+		2
+		),
+	};
+};
+
+module.exports.showPost = async event => {
+
+	const post = await getDetailPost(event.pathParameters.id);
+
+	return {
+		statusCode: 200,
+		body: JSON.stringify({
+			message: 'Post retrieved successfully!',
+			data: post
 		},
 		null,
 		2
@@ -41,4 +57,8 @@ const getUsers = async () => {
 
 const getPosts = async () => {
 	return fetch(`${API_URL}/posts`).then(response => response.json())
+}
+
+const getDetailPost = async (id) => {
+	return fetch(`${API_URL}/posts/${id}`).then(response => response.json())
 }
